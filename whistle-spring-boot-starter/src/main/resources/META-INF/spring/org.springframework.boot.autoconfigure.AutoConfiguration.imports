@@ -1,0 +1,2 @@
+io.junseok.whistle.spring.WhistleAutoConfiguration
+io.junseok.whistle.spring.SlackAutoConfiguration
