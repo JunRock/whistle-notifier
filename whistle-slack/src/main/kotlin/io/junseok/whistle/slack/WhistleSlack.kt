@@ -8,5 +8,7 @@ fun Whistle.slack(
     body: String,
     level: Level = Level.ERROR,
     mentions: List<Mention> = emptyList(),
-    link: String? = null
-) = fire(SlackMessage(title, body, level, mentions, link))
+    link: String? = null,
+    fields: Map<String, String> = emptyMap(),
+    exception: Throwable? = null
+) = fire(SlackMessage(title, body, level, mentions, link, fields, exception))

@@ -48,7 +48,10 @@ class SlackTest {
 
             assertEquals("POST", method.get(3, SECONDS))
             assertEquals("application/json; charset=utf-8", contentType.get(3, SECONDS))
-            assertEquals("""{"text":"🚨 *t*\nb\"q"}""", body.get(3, SECONDS))
+            assertEquals(
+                """{"text":"🚨 *t*","attachments":[{"color":"#E01E5A","text":"b\"q","fields":[],"mrkdwn_in":["text"]}]}""",
+                body.get(3, SECONDS)
+            )
         }
     }
 

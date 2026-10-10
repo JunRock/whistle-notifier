@@ -7,5 +7,7 @@ data class SlackMessage(
     val body: String,
     val level: Level,
     val mentions: List<Mention>,
-    val link: String?
+    val link: String?,
+    val fields: Map<String, String> = emptyMap(),
+    val exception: Throwable? = null
 )
