@@ -3,6 +3,7 @@ package io.junseok.whistle.slack
 import io.junseok.whistle.enums.Level
 
 data class SlackMessage(
+    val webhook: String,
     val title: String,
     val body: String,
     val level: Level = Level.ERROR,

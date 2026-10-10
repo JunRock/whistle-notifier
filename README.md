@@ -55,7 +55,9 @@ Slack 앱 설정 → Incoming Webhooks → 채널 선택 후 URL 복사
 ```yaml
 whistle:
   slack:
-    webhook-url: ${SLACK_WEBHOOK_URL}
+    webhooks:
+      error: ${SLACK_ERROR_WEBHOOK_URL}
+      job-alarm: ${SLACK_JOB_ALARM_WEBHOOK_URL}
 ```
 
 **3. 사용**
@@ -67,7 +69,7 @@ import io.junseok.whistle.slack.slack
 @Service
 class OrderService(private val whistle: Whistle) {
     fun pay(orderId: Long) {
-        whistle.slack("결제 실패", "orderId=$orderId")
+        whistle.slack("error", "결제 실패", "orderId=$orderId")
     }
 }
 ```
@@ -76,15 +78,17 @@ class OrderService(private val whistle: Whistle) {
 
 | 속성 | 기본값 | 설명 |
 |---|---|---|
-| `whistle.slack.webhook-url` | - | Slack Incoming Webhook URL. 없으면 Slack 채널 미등록 |
+| `whistle.slack.webhooks.<이름>` | - | 이름별 Slack Incoming Webhook URL. 메시지가 갈 Slack 채널은 웹훅 발급 시 정해짐 |
 | `whistle.slack.timeout` | `3s` | 요청 타임아웃 |
 
 ## Usage
 
+모든 호출에 yml에 등록한 웹훅 이름을 지정. 기본 웹훅 없음, 등록되지 않은 이름이면 경고 로그 후 건너뜀.
+
 ### 기본
 
 ```kotlin
-whistle.slack("배치 완료", "처리 1,204건", level = Level.INFO)
+whistle.slack("job-alarm", "배치 완료", "처리 1,204건", level = Level.SUCCESS)
 ```
 
 | Level | 표시 |
@@ -97,7 +101,7 @@ whistle.slack("배치 완료", "처리 1,204건", level = Level.INFO)
 ### 멘션
 
 ```kotlin
-whistle.slack("서버 다운", "api-1 응답 없음", mentions = listOf(Mention.Here))
+whistle.slack("error", "서버 다운", "api-1 응답 없음", mentions = listOf(Mention.Here))
 ```
 
 | 값 | 결과 |
@@ -110,6 +114,7 @@ whistle.slack("서버 다운", "api-1 응답 없음", mentions = listOf(Mention.
 
 ```kotlin
 whistle.slack(
+    webhook = "error",
     title = "결제 실패",
     body = "PG 응답 코드 E102",
     fields = mapOf("주문" to "1234", "회원" to "57", "금액" to "12,000원"),
@@ -128,6 +133,7 @@ try {
     paymentClient.approve(orderId)
 } catch (e: Exception) {
     whistle.slack(
+        webhook = "error",
         title = e.javaClass.simpleName,
         body = e.message ?: "",
         mentions = listOf(Mention.Here),
@@ -146,12 +152,12 @@ try {
 ### Spring 없이
 
 ```kotlin
-val whistle = Whistle(listOf(Slack(System.getenv("SLACK_WEBHOOK_URL"))))
+val whistle = Whistle(listOf(Slack(mapOf("error" to System.getenv("SLACK_ERROR_WEBHOOK_URL")))))
 
-whistle.slack("배치 완료", "처리 1,204건")
+whistle.slack("error", "배치 완료", "처리 1,204건")
 ```
 
-타임아웃 변경: `Slack(url, Duration.ofSeconds(5))`
+타임아웃 변경: `Slack(mapOf("error" to url), Duration.ofSeconds(5))`
 
 ## License
 

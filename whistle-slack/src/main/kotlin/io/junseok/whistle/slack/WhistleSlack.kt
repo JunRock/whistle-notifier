@@ -4,6 +4,7 @@ import io.junseok.whistle.Whistle
 import io.junseok.whistle.enums.Level
 
 fun Whistle.slack(
+    webhook: String,
     title: String,
     body: String,
     level: Level = Level.ERROR,
@@ -11,4 +12,4 @@ fun Whistle.slack(
     link: String? = null,
     fields: Map<String, String> = emptyMap(),
     exception: Throwable? = null
-) = fire(SlackMessage(title, body, level, mentions, link, fields, exception))
+) = fire(SlackMessage(webhook, title, body, level, mentions, link, fields, exception))
