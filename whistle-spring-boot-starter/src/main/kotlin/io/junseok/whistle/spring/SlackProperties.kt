@@ -9,11 +9,10 @@ import java.time.Duration
  */
 @ConfigurationProperties(SlackProperties.PREFIX)
 class SlackProperties {
-    lateinit var webhookUrl: String
+    var webhooks: Map<String, String> = emptyMap()
     var timeout: Duration = WebhookClient.DEFAULT_TIMEOUT
 
     companion object {
         const val PREFIX = "whistle.slack"
-        const val WEBHOOK_URL = "webhook-url"
     }
 }

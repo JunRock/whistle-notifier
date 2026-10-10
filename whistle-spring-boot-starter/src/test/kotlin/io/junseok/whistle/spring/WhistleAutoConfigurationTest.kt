@@ -29,13 +29,19 @@ class WhistleAutoConfigurationTest {
         .withConfiguration(AutoConfigurations.of(WhistleAutoConfiguration::class.java, SlackAutoConfiguration::class.java))
 
     @Test
-    fun `webhook-url 이 있으면 Slack 채널과 Whistle 빈이 등록되고 timeout 도 바인딩된다`() {
+    fun `webhooks 가 있으면 Slack 채널과 Whistle 빈이 등록되고 웹훅 이름과 timeout 이 바인딩된다`() {
         runner
-            .withPropertyValues("whistle.slack.webhook-url=https://hooks.slack.com/x", "whistle.slack.timeout=5s")
+            .withPropertyValues(
+                "whistle.slack.webhooks.error=https://hooks.slack.com/e",
+                "whistle.slack.webhooks.job-alarm=https://hooks.slack.com/j",
+                "whistle.slack.timeout=5s"
+            )
             .run { ctx ->
                 ctx.getBean(Slack::class.java)
                 ctx.getBean(Whistle::class.java)
-                assertEquals(Duration.ofSeconds(5), ctx.getBean(SlackProperties::class.java).timeout)
+                val props = ctx.getBean(SlackProperties::class.java)
+                assertEquals(setOf("error", "job-alarm"), props.webhooks.keys)
+                assertEquals(Duration.ofSeconds(5), props.timeout)
             }
     }
 
@@ -51,10 +57,9 @@ class WhistleAutoConfigurationTest {
     }
 
     @Test
-    fun `설정이 없으면 Slack 빈 없이 Whistle 만 등록되고 호출해도 예외가 없다`() {
+    fun `웹훅 설정이 없어도 호출하면 예외 없이 건너뛴다`() {
         runner.run { ctx ->
-            assertEquals(0, ctx.getBeansOfType(Slack::class.java).size)
-            ctx.getBean(Whistle::class.java).slack("t", "b")
+            ctx.getBean(Whistle::class.java).slack("error", "t", "b")
         }
     }
 

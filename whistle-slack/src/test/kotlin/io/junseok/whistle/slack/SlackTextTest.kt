@@ -13,7 +13,7 @@ class SlackTextTest {
         link: String? = null,
         fields: Map<String, String> = emptyMap(),
         exception: Throwable? = null
-    ) = SlackMessage(title, body, level, mentions, link, fields, exception)
+    ) = SlackMessage("c", title, body, level, mentions, link, fields, exception)
 
     @Test
     fun `헤더는 멘션 이모지 제목 순으로 조립되고 제목은 이스케이프한다`() {
@@ -100,7 +100,7 @@ class SlackTextTest {
     }
 
     @Test
-    fun `SlackMessage 는 제목과 본문만으로 만들 수 있다`() {
-        assertEquals(SlackMessage("t", "b", Level.ERROR, emptyList(), null), SlackMessage("t", "b"))
+    fun `SlackMessage 는 채널 제목 본문만으로 만들 수 있다`() {
+        assertEquals(SlackMessage("c", "t", "b", Level.ERROR, emptyList(), null), SlackMessage("c", "t", "b"))
     }
 }
