@@ -16,7 +16,7 @@ Kotlin/Spring Boot 백엔드용 Slack 알림 라이브러리.
 
 ```kotlin
 dependencies {
-    implementation("io.github.junrock:whistle-spring-boot-starter:0.0.3")
+    implementation("io.github.junrock:whistle-spring-boot-starter:0.0.4")
 }
 ```
 
@@ -24,7 +24,7 @@ dependencies {
 <dependency>
     <groupId>io.github.junrock</groupId>
     <artifactId>whistle-spring-boot-starter</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
 </dependency>
 ```
 
@@ -32,7 +32,7 @@ dependencies {
 
 ```kotlin
 dependencies {
-    implementation("io.github.junrock:whistle-slack:0.0.3")
+    implementation("io.github.junrock:whistle-slack:0.0.4")
 }
 ```
 
@@ -40,7 +40,7 @@ dependencies {
 <dependency>
     <groupId>io.github.junrock</groupId>
     <artifactId>whistle-slack</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
 </dependency>
 ```
 
