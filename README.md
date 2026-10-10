@@ -92,6 +92,7 @@ whistle.slack("배치 완료", "처리 1,204건", level = Level.INFO)
 | `INFO` | ℹ️ 파란 바 |
 | `WARN` | ⚠️ 노란 바 |
 | `ERROR` (기본값) | 🚨 빨간 바 |
+| `SUCCESS` | ✅ 초록 바 |
 
 ### 멘션
 
