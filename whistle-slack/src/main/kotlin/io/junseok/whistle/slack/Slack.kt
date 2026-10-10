@@ -2,7 +2,6 @@ package io.junseok.whistle.slack
 
 import io.junseok.whistle.Channel
 import io.junseok.whistle.common.WebhookClient
-import io.junseok.whistle.common.toJsonString
 import java.time.Duration
 import java.util.concurrent.CompletableFuture
 
@@ -15,9 +14,5 @@ class Slack(
     override val messageType = SlackMessage::class
 
     override fun send(message: SlackMessage): CompletableFuture<*> =
-        webhook.post("""{"$TEXT_FIELD":${message.toText().toJsonString()}}""")
-
-    private companion object {
-        const val TEXT_FIELD = "text"
-    }
+        webhook.post(message.toPayload())
 }
