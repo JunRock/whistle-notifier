@@ -120,11 +120,23 @@ whistle.slack(
 
 ### 예외 알림
 
-stacktrace 앞 20줄이 코드 블록으로 붙음.
+`exception`을 넘기면 본문 아래에 stacktrace가 코드 블록으로 붙음.
 
 ```kotlin
-whistle.slack(e.javaClass.simpleName, e.message ?: "", exception = e)
+try {
+    paymentClient.approve(orderId)
+} catch (e: Exception) {
+    whistle.slack(
+        title = e.javaClass.simpleName,
+        body = e.message ?: "",
+        mentions = listOf(Mention.Here),
+        fields = mapOf("주문" to "$orderId"),
+        exception = e,
+    )
+    throw e
+}
 ```
+
 
 ### Spring 없이
 
