@@ -92,4 +92,15 @@ class SlackTextTest {
         assertEquals("... 6줄 생략", block[block.size - 2])
         assertEquals("```", block.last())
     }
+
+    @Test
+    fun `SUCCESS 는 체크 이모지와 초록 색상 바로 표시된다`() {
+        assertEquals("✅ *t*", msg(level = Level.SUCCESS).toHeader())
+        assertEquals(true, msg(level = Level.SUCCESS).toPayload().contains(""""color":"#2EB67D""""))
+    }
+
+    @Test
+    fun `SlackMessage 는 제목과 본문만으로 만들 수 있다`() {
+        assertEquals(SlackMessage("t", "b", Level.ERROR, emptyList(), null), SlackMessage("t", "b"))
+    }
 }

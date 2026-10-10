@@ -23,6 +23,7 @@ private const val MRKDWN_IN = "mrkdwn_in"
 private const val COLOR_INFO = "#36C5F0"
 private const val COLOR_WARN = "#ECB22E"
 private const val COLOR_ERROR = "#E01E5A"
+private const val COLOR_SUCCESS = "#2EB67D"
 
 /**
  * 멘션과 제목은 알림 미리보기와 멘션 알림을 위해 최상위 text 에 둠
@@ -79,6 +80,7 @@ private val Level.emoji
         Level.INFO -> "ℹ️"
         Level.WARN -> "⚠️"
         Level.ERROR -> "🚨"
+        Level.SUCCESS -> "✅"
     }
 
 private val Level.color
@@ -86,6 +88,7 @@ private val Level.color
         Level.INFO -> COLOR_INFO
         Level.WARN -> COLOR_WARN
         Level.ERROR -> COLOR_ERROR
+        Level.SUCCESS -> COLOR_SUCCESS
     }
 
 /*
