@@ -137,6 +137,10 @@ try {
 }
 ```
 
+<img src="docs/exception-alert.png" alt="예외 알림 예시" width="600">
+
+긴 stacktrace는 앞 20줄만 전송되고, Slack에서 "자세히 표시"로 펼쳐 볼 수 있음.
+
 
 ### Spring 없이
 
