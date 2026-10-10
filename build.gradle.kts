@@ -19,7 +19,7 @@ subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     group = "io.github.junrock"
-    version = "0.0.2"
+    version = "0.0.3"
 
     repositories { mavenCentral() }
 
